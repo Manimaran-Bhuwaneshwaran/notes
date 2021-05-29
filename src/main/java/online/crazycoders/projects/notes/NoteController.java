@@ -33,12 +33,12 @@ public class NoteController {
 	}
 
 	@GetMapping("api/v1/note/getAll/")
-	public @ResponseBody List<Note> getAll() {
+	public List<Note> getAll() {
 		return this.noteRepo.findAll();
 	}
 
 	@GetMapping("api/v1/note/get/{id}/")
-	public @ResponseBody ResponseEntity<Object> getById(@PathVariable("id") String id) {
+	public ResponseEntity<Object> getById(@PathVariable("id") String id) {
 		if (this.noteRepo.existsById(id)) {
 			ResponseEntity<Object> res = new ResponseEntity(this.noteRepo.findById(id).get(), HttpStatus.OK);
 			return res;
@@ -48,7 +48,7 @@ public class NoteController {
 	}
 
 	@PostMapping("api/v1/note/add/")
-	public @ResponseBody ResponseEntity<Object> add(@RequestBody Note note) {
+	public ResponseEntity<Object> add(@RequestBody Note note) {
 		if (this.noteRepo.existsById(note.getId())) {
 			this.noteRepo.save(note);
 			ResponseEntity<Object> res = new ResponseEntity("Success", HttpStatus.OK);
@@ -59,7 +59,7 @@ public class NoteController {
 	}
 
 	@PostMapping("api/v1/note/update/{id}")
-	public @ResponseBody ResponseEntity<Object> update(@RequestBody Note note, @PathVariable("id") String id) {
+	public ResponseEntity<Object> update(@RequestBody Note note, @PathVariable("id") String id) {
 		if (this.noteRepo.existsById(id)) {
 			this.noteRepo.save(note);
 			ResponseEntity<Object> res = new ResponseEntity("Success", HttpStatus.OK);
@@ -70,7 +70,7 @@ public class NoteController {
 	}
 
 	@DeleteMapping("api/v1/note/delete/{id}/")
-	public @ResponseBody ResponseEntity<Object> deleteById(@PathVariable("id") String id) {
+	public ResponseEntity<Object> deleteById(@PathVariable("id") String id) {
 		if (this.noteRepo.existsById(id)) {
 			this.noteRepo.deleteById(id);
 			ResponseEntity<Object> res = new ResponseEntity("Success", HttpStatus.OK);
