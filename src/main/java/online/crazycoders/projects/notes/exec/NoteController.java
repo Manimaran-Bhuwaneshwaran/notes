@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,14 +50,14 @@ public class NoteController {
 	@PostMapping("/api/v1/note/add/")
 	public @ResponseBody String add(@RequestBody Note note) {
 		if (this.noteRepo.existsById(note.getId())) {
+			return "failed";
+		}else {
 			this.noteRepo.save(note);
 			return "success";
-		}else {
-			return "failed";
 		}
 	}
 
-	@PostMapping("/api/v1/note/update/{id}")
+	@PutMapping("/api/v1/note/update/{id}")
 	public String update(@RequestBody Note note, @PathVariable("id") String id) {
 		if (this.noteRepo.existsById(id)) {
 			this.noteRepo.save(note);
